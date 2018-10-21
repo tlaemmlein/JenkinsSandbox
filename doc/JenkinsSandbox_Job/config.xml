@@ -1,0 +1,71 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.1">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/tlaemmlein/JenkinsSandbox.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <hudson.triggers.SCMTrigger>
+      <spec>* * * * *</spec>
+      <ignorePostCommitHooks>false</ignorePostCommitHooks>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.BatchFile>
+      <command>call FirstGTest/_Build_VS2017_Win64_NMake.bat</command>
+    </hudson.tasks.BatchFile>
+    <hudson.plugins.cmake.CToolBuilder plugin="cmakebuilder@2.6.0">
+      <installationName>InSearchPath</installationName>
+      <workingDir>FirstGTest/build</workingDir>
+      <toolArgs>--no-compress-output -T Test || verify &gt; NUL</toolArgs>
+      <toolId>ctest</toolId>
+    </hudson.plugins.cmake.CToolBuilder>
+  </builders>
+  <publishers>
+    <xunit plugin="xunit@2.3.0">
+      <types>
+        <CTestType>
+          <pattern>FirstGTest/build/Testing/**/Test.xml</pattern>
+          <skipNoTestFiles>false</skipNoTestFiles>
+          <failIfNotNew>true</failIfNotNew>
+          <deleteOutputFiles>true</deleteOutputFiles>
+          <stopProcessingIfError>true</stopProcessingIfError>
+        </CTestType>
+      </types>
+      <thresholds/>
+      <thresholdMode>1</thresholdMode>
+      <extraConfiguration>
+        <testTimeMargin>3000</testTimeMargin>
+      </extraConfiguration>
+      <testDataPublishers class="empty-set"/>
+    </xunit>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.34">
+      <deleteDirs>false</deleteDirs>
+      <cleanupParameter></cleanupParameter>
+      <externalDelete></externalDelete>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+  </buildWrappers>
+</project>
