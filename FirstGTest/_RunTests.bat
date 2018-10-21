@@ -1,9 +1,13 @@
 @echo off
 
-if not exist %~dp0\bin\FirstGTest.exe (
-  echo %~dp0\bin\FirstGTest.exe doesn't exist.
-  echo Aborting...
-  goto:eof
-)
+cd %~dp0\build
+ctest --verbose
+cd ..
 
-call %~dp0\bin\FirstGTest.exe
+REM if not exist %~dp0\bin\FirstGTest.exe (
+  REM echo %~dp0\bin\FirstGTest.exe doesn't exist.
+  REM echo Aborting...
+  REM goto:eof
+REM )
+
+REM call %~dp0\bin\FirstGTest.exe
