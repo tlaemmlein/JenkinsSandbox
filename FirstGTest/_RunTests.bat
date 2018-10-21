@@ -1,7 +1,10 @@
 @echo off
 
 cd %~dp0\build
-ctest --verbose
+rem ctest --verbose
+ctest --no-compress-output -T Test || verify > NUL
+rem cd bin 
+rem FirstGTest.exe -gtest_output
 cd ..
 
 REM if not exist %~dp0\bin\FirstGTest.exe (
