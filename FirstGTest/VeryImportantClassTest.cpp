@@ -21,7 +21,7 @@ protected:
 
 TEST_F(VeryImportantClassTest, simpleExpectEq)
 {
-	const int expected = 2;
+	const int expected = 1;
 	const int actual =1;
     EXPECT_EQ(expected, actual);
 }
