@@ -33,7 +33,7 @@ pipeline {
       )
 
       // Clear the source and build dirs before next run
-      deleteDir()
+      //deleteDir()
     }
   }  
 }
